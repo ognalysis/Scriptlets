@@ -10,5 +10,5 @@ foreach ($User in $Users){
     }
 }
 # Sorts Alphabetically by Name; displays Name, UPN, and Manager name.
-$Report | Sort-Object -Property UserPrincipalName | ft -Property DisplayName,@{n="Email";e={($_.UserPrincipalName)}},@{n="Manager"; e={(Get-ADUser $_.manager).name}} -AutoSize
+$Report | Sort-Object -Property UserPrincipalName | ft -Property DisplayName,@{n="Email";e={($_.Mail)}},@{n="Manager"; e={(Get-ADUser $_.manager).name}} -AutoSize
 $stopwatch.Stop(); Write-Host -NoNewline "Total Time (Seconds):" ($stopwatch.Elapsed.Seconds)
