@@ -1,9 +1,12 @@
-$SearchBase = "OU=Users,DC=CONTOSO,DC=COM" #Search base for user list
-$Users = get-ADUser -filter * -SearchBase $SearchBase -Properties * #Grab all users from search base
+$SearchBase = "OU=USERS,DC=CONTOSO,DC=COM"
+$Users = get-ADUser -filter * -SearchBase $SearchBase -Properties *
+$Report = [System.Collections.Generic.List[Object]]::new()
 foreach ($User in $Users){
-    if ($User.Enabled -eq $true){
-        if ($User.Manager -match "manager name") {
-            $User.DisplayName
+    if ($User.Enabled -eq $true){ #Change to $false for disabled users
+        if ($User.Manager -match "John Smith") {
+            $Report.Add($User)
         }
     }
 }
+# Sorts Alphabetically by Name; displays Name, UPN, and Manager name.
+$Report | Sort-Object -Property UserPrincipalName | ft -Property DisplayName,@{n="Email";e={($_.UserPrincipalName)}},@{n="Manager"; e={(Get-ADUser $_.manager).name}} -AutoSize
