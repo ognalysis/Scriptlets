@@ -1,0 +1,9 @@
+$SearchBase = "OU=Users,DC=CONTOSO,DC=COM" #Search base for user list
+$Users = get-ADUser -filter * -SearchBase $SearchBase -Properties * #Grab all users from search base
+foreach ($User in $Users){
+    if ($User.Enabled -eq $true){
+        if ($User.Manager -match "manager name") {
+            $User.DisplayName
+        }
+    }
+}
