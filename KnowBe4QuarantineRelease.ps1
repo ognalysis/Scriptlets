@@ -31,7 +31,7 @@ foreach ($message in $Quarantine) {
 
 foreach ($item in $results) {
     if ($item.ReleaseStatus -eq "NOTRELEASED"){
-        Get-QuarantineMessage -MessageID $item.MessageId | Release-QuarantineMessage -ReleaseToAll
+        Get-QuarantineMessage -MessageID $item.MessageId | Release-QuarantineMessage -ReleaseToAll -ReportFalsePositive
         Write-Host "Received: $($item.ReceivedTime) - Message $($item.MessageId) - Subject: $($item.Subject) - Status: Released";
     }
 }
