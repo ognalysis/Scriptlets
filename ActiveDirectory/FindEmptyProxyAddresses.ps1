@@ -1,0 +1,1 @@
+Get-ADUSer -Filter 'enabled -eq $true' -Properties ProxyAddresses -SearchBase "OU=Computers,DC=Contoso,DC=Com" | Select-Object Name,SamAccountName, @{n="ProxyAddresses";e= {$_.ProxyAddresses -join ";"}} | Where-Object -Property ProxyAddresses -EQ ""
