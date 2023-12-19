@@ -7,7 +7,7 @@ from datetime import datetime
 def find_IP(OCT1,OCT2,OCT3):
 	pattern = re.compile(r"lease\s+("+re.escape(OCT1)+"\."+re.escape(OCT2)+"\."+re.escape(OCT3)+"\.[0-9][0-9]?[0-9]?)\s+\{\s+starts\s+[0-9]\s+(.*);\s+ends\s+[0-9]\s+(.*);")
 
-	with open("/home/kogint/dhcpd.leases") as f:
+	with open("/home/ognalysis/dhcpd.leases") as f:
 		for match in pattern.finditer(f.read()):
 			if datetime.strptime(match.group(3), '%Y/%m/%d %H:%M:%S') < datetime.now():
 				pass
