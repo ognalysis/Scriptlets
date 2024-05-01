@@ -1,5 +1,5 @@
 # Record Example:
-# 0.40.43.8.in-addr.arpa. IN      PTR     olp-8-43-40-0.olp.net.
+# 0.40.43.8.in-addr.arpa. IN      PTR     example-8-43-40-0.example.com.
 
 # Rev.conf Example:
 # zone "333.222.111.in-addr-arpa" {
@@ -36,11 +36,11 @@ def validate_user_input(uput):
 	validate = re.search("^(?:(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\.(?!$)|$)){4}$", uput)
 
 	if validate:
-		print("VALID")
+		print("Valid IP!")
 		print(uput)
 		return uput
 	else:
-		print("NOPE")
+		print("Not a valid IP; Try Again...")
 		validate_user_input(uput)
 
 def print_rev_records_to_file(sub):
@@ -48,37 +48,28 @@ def print_rev_records_to_file(sub):
 	print(type(sub))
 
 	filename = sub[0] + "." + sub[1] + "."  + sub[2] + ".rev"
-	print(filename)
+	print("Creating file...")
 	f = open(filename, "x")
 
 	rev_record_file_header(f, sub)
 
 	for ip in range(256):
-# 		This is forward record, not reverse...
-#		f.write("olp-" + sub[0] + "-" + sub[1] + "-" + sub[2] + "-" + str(ip) + "\t\tIN\tA\t" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + "\n")
-
 		f.write(str(ip) + "." + sub[2] + "." + sub[1] + "." + sub[0] + ".in-addr.arpa.\tIN\tPTR\t" + re.split("\.",domain,1)[0] + "-" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + "." + domain  + ".\n")
 
 	f.close()
-
-#def check_file_exists(filename):
-#	if(filename)
-#		return false
-#	else
-#		return true
-
-#def create_record_file(sub):
-	#if(check_file_exists(filename)
-#		print("file exists")
-#		break
-
-#	filename = sub[0] + "." + sub[1] + "."  + sub[2] + ".rev"
-#	print(filename)
-#	f = open(filename, "x")
-#	f.close()
+	print("Reverse Record File Finished!")
 
 def rev_record_file_header(file, sn):
 	file.write("$ttl 172800\n" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns." + domain + " root." + domain + " (\n\t\t" + today + "00\n\t\t10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns." + domain + ".\n151.217.67.in-addr.arpa.\tIN\tNS\tns2." + domain  + ".\n")
+
+def rev_conf(sn):
+	print("Creating Zone Configuration...")
+	filename = sn[0] + "." + sn[1] + "." + sn[2] + ".conf"
+	f = open(filename, "w")
+
+	f.write("zone \"" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa\" {\n\ttype master;\n\tfile \"/etc/bind/rev/" + sn[0] + "." + sn[1] + "." + sn[2] + ".rev\";\n\t};")
+	f.close()
+	print("Zone config done!")
 
 # MAIN ================================
 
@@ -91,13 +82,7 @@ subnet = userinput.split(".")
 # Write Records to file
 print_rev_records_to_file(subnet)
 
+# Write record conf to file
+rev_conf(subnet)
 
 # END MAIN ============================
-
-
-
-
-#subnet = str.split(".")
-
-#for ip in range(256):
-#	print(ip, ".", subnet[2], ".", subnet[1], ".", subnet[0], "in-addr.arpa.\t\t IN\tPTR\tolp-", subnet[0], "-", subnet[1], "-", subnet[2], "-", ip, ".olp.net.", sep='')
