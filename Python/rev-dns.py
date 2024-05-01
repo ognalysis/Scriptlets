@@ -21,9 +21,10 @@
 # regex: ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$
 
 from datetime import date
-import re
+import re, sys
 
-today = date.today()
+today = date.today().strftime("%Y%m%d")
+
 userinput = ""
 filename = ""
 
@@ -51,12 +52,10 @@ def print_rev_records_to_file(sub):
 	rev_record_file_header(f, sub)
 
 	for ip in range(256):
-#		print("olp-", subnet[0], "-", subnet[1], "-", subnet[2], "-", ip, "\t\tIN\tA\t", subnet[0], ".", subnet[1], ".", subnet[2], ".", ip, sep='')
-
-# This is forward record, not reverse...
+# 		This is forward record, not reverse...
 #		f.write("olp-" + sub[0] + "-" + sub[1] + "-" + sub[2] + "-" + str(ip) + "\t\tIN\tA\t" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + "\n")
 
-		f.write(ip + "." + sub[2] + "." + sub[1] + "." + sub[0] + ".in-addr.arpa.\tIN\tPTR\tolp-" + sub[0] + "." + sub[1] + "." + sub[2] + "."+ip+".olp.net.")
+		f.write(str(ip) + "." + sub[2] + "." + sub[1] + "." + sub[0] + ".in-addr.arpa.\tIN\tPTR\tolp-" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + ".olp.net.\n")
 
 	f.close()
 
@@ -77,8 +76,7 @@ def print_rev_records_to_file(sub):
 #	f.close()
 
 def rev_record_file_header(file, sn):
-	file.write("$ttl 172800\n")
-	file.write(sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns.olp.net. root.olp.net )\n\t\t" + str(today.year) + str(today.month) + str(today.day) + "00\n10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns.olp.net.\n151.217.67.in-addr.arpa.\tIN\tNS\tns2.olp.net.")
+	file.write("$ttl 172800\n" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns.olp.net. root.olp.net (\n\t\t" + today + "00\n\t\t10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns.olp.net.\n151.217.67.in-addr.arpa.\tIN\tNS\tns2.olp.net.\n")
 
 # MAIN ================================
 
