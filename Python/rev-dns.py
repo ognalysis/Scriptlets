@@ -21,14 +21,18 @@
 # regex: ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$
 
 from datetime import date
+from time import sleep
 import re, sys
 
 today = date.today().strftime("%Y%m%d")
 
 userinput = ""
 filename = ""
+sleepytime = 3
 
 domain = "example.net"
+print("Using Domain: " + domain)
+sleep(sleepytime)
 
 def validate_user_input(uput):
 
@@ -37,7 +41,7 @@ def validate_user_input(uput):
 
 	if validate:
 		print("Valid IP!")
-		print(uput)
+		#print(uput)
 		return uput
 	else:
 		print("Not a valid IP; Try Again...")
@@ -45,10 +49,11 @@ def validate_user_input(uput):
 
 def print_rev_records_to_file(sub):
 
-	print(type(sub))
+#	print(type(sub))
 
 	filename = sub[0] + "." + sub[1] + "."  + sub[2] + ".rev"
 	print("Creating file...")
+	sleep(sleepytime)
 	f = open(filename, "x")
 
 	rev_record_file_header(f, sub)
@@ -58,12 +63,14 @@ def print_rev_records_to_file(sub):
 
 	f.close()
 	print("Reverse Record File Finished!")
+	sleep(sleepytime)
 
 def rev_record_file_header(file, sn):
 	file.write("$ttl 172800\n" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns." + domain + " root." + domain + " (\n\t\t" + today + "00\n\t\t10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns." + domain + ".\n151.217.67.in-addr.arpa.\tIN\tNS\tns2." + domain  + ".\n")
 
 def rev_conf(sn):
 	print("Creating Zone Configuration...")
+	sleep(sleepytime)
 	filename = sn[0] + "." + sn[1] + "." + sn[2] + ".conf"
 	f = open(filename, "w")
 
