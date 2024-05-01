@@ -28,6 +28,8 @@ today = date.today().strftime("%Y%m%d")
 userinput = ""
 filename = ""
 
+domain = "example.net"
+
 def validate_user_input(uput):
 
 	uput = input("Enter an IPv4 Address: ")
@@ -55,7 +57,7 @@ def print_rev_records_to_file(sub):
 # 		This is forward record, not reverse...
 #		f.write("olp-" + sub[0] + "-" + sub[1] + "-" + sub[2] + "-" + str(ip) + "\t\tIN\tA\t" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + "\n")
 
-		f.write(str(ip) + "." + sub[2] + "." + sub[1] + "." + sub[0] + ".in-addr.arpa.\tIN\tPTR\tolp-" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + ".olp.net.\n")
+		f.write(str(ip) + "." + sub[2] + "." + sub[1] + "." + sub[0] + ".in-addr.arpa.\tIN\tPTR\t" + re.split("\.",domain,1)[0] + "-" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + "." + domain  + ".\n")
 
 	f.close()
 
@@ -76,7 +78,7 @@ def print_rev_records_to_file(sub):
 #	f.close()
 
 def rev_record_file_header(file, sn):
-	file.write("$ttl 172800\n" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns.olp.net. root.olp.net (\n\t\t" + today + "00\n\t\t10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns.olp.net.\n151.217.67.in-addr.arpa.\tIN\tNS\tns2.olp.net.\n")
+	file.write("$ttl 172800\n" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns." + domain + " root." + domain + " (\n\t\t" + today + "00\n\t\t10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns." + domain + ".\n151.217.67.in-addr.arpa.\tIN\tNS\tns2." + domain  + ".\n")
 
 # MAIN ================================
 

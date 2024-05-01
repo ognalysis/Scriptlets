@@ -1,5 +1,5 @@
 $ttl 172800
-123.123.123.in-addr.arpa.	IN	SOA	ns.olp.net. root.olp.net (
+123.123.123.in-addr.arpa.	IN	SOA	ns.olp.net root.olp.net (
 		2024050100
 		10800
 		3600
