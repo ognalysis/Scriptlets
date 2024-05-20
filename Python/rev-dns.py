@@ -66,7 +66,7 @@ def print_rev_records_to_file(sub):
 	sleep(sleepytime)
 
 def rev_record_file_header(file, sn):
-	file.write("$ttl 172800\n" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns." + domain + " root." + domain + " (\n\t\t" + today + "00\n\t\t10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns." + domain + ".\n151.217.67.in-addr.arpa.\tIN\tNS\tns2." + domain  + ".\n")
+	file.write("$ttl 172800\n" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns." + domain + ". root." + domain + " (\n\t\t" + today + "00\n\t\t10800\n\t\t3600\n\t\t432000\n\t\t38400 )\n151.217.67.in-addr.arpa.\tIN\tNS\tns." + domain + ".\n151.217.67.in-addr.arpa.\tIN\tNS\tns2." + domain  + ".\n")
 
 def rev_conf(sn):
 	print("Creating Zone Configuration...")
