@@ -9,7 +9,7 @@
 
 # Rev Record file header example:
 #$ttl 172800
-#151.217.67.in-addr.arpa. IN      SOA     ns.example.com. root.example.com (
+#333.222.111.in-addr.arpa. IN      SOA     ns.example.com. root.example.com (
 #                   2019120600
 #                   10800
 #                   3600
@@ -66,7 +66,7 @@ def print_rev_records_to_file(sub):
 	sleep(sleepytime)
 
 def rev_record_file_header(file, sn):
-	file.write("$ttl 172800\r" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns." + domain + ". root." + domain + " (\r\t\t" + today + "00\r\t\t10800\r\t\t3600\r\t\t432000\r\t\t38400 )\r151.217.67.in-addr.arpa.\tIN\tNS\tns." + domain + ".\r151.217.67.in-addr.arpa.\tIN\tNS\tns2." + domain  + ".\r")
+	file.write("$ttl 172800\r" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tSOA\tns." + domain + ". root." + domain + " (\r\t\t" + today + "00\r\t\t10800\r\t\t3600\r\t\t432000\r\t\t38400 )\r" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tNS\tns." + domain + ".\r" + sn[2] + "." + sn[1] + "." + sn[0] + ".in-addr.arpa.\tIN\tNS\tns2." + domain  + ".\r")
 
 def rev_conf(sn):
 	print("Creating Zone Configuration...")
