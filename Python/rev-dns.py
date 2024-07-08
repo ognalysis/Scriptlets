@@ -59,7 +59,7 @@ def print_rev_records_to_file(sub):
 	rev_record_file_header(f, sub)
 
 	for ip in range(256):
-		f.write(str(ip) + "." + sub[2] + "." + sub[1] + "." + sub[0] + ".in-addr.arpa.\tIN\tPTR\t" + re.split("\.",domain,1)[0] + "-" + sub[0] + "." + sub[1] + "." + sub[2] + "." + str(ip) + "." + domain  + ".\r")
+		f.write(str(ip) + "." + sub[2] + "." + sub[1] + "." + sub[0] + ".in-addr.arpa.\tIN\tPTR\t" + re.split("\.",domain,1)[0] + "-" + sub[0] + "-" + sub[1] + "-" + sub[2] + "-" + str(ip) + "." + domain  + ".\r")
 
 	f.close()
 	print("Reverse Record File Finished!")
